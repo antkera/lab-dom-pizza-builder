@@ -1,7 +1,6 @@
 // Write your Pizza Builder JavaScript in this file.
 
 // DOM
-// let btnMushroomsNode = document.querySelector("btn btn-mushrooms")
 let btnMushroomsNode = document.querySelector('.btn-mushrooms');
 let btnGreenPeppersNode = document.querySelector('.btn-green-peppers');
 let btnSauceNode = document.querySelector('.btn-sauce');
@@ -9,8 +8,22 @@ let btnCrustNode = document.querySelector('.btn-crust');
 let sauceNode = document.querySelector('.sauce');
 let crustNode = document.querySelector('.crust');
 let buttonsNodes = document.querySelectorAll('.btn');
-let pricesNodes = document.querySelectorAll('.price ul li');
+let pricesNodes = document.querySelector('.price ul');
 let totalPricesNode = document.querySelector('.price strong');
+
+let newPepperoniNode = document.createElement('li');
+let newMushroomsNode = document.createElement('li');
+let newGreenPeppersNode = document.createElement('li');
+let newWhiteSauceNode = document.createElement('li');
+let newGlutenFreeCrustNode = document.createElement('li');
+let pricesArr = [1, 1, 1, 3, 5];
+let nameIngredientsArr = [
+  'pepperoni',
+  'mushrooms',
+  'green peppers',
+  'white sauce',
+  'gluten-free crust'
+];
 
 console.log(totalPricesNode);
 console.log(crustNode);
@@ -41,7 +54,6 @@ function renderEverything() {
   renderGreenPeppers();
   renderWhiteSauce();
   renderGlutenFreeCrust();
-
   renderButtons();
   renderPrice();
 }
@@ -134,38 +146,25 @@ function renderButtons() {
   }
 }
 
-function renderPrice() {
-  // Iteration 4: change the HTML of `<aside class="panel price">`
-  pricesNodes.forEach((elm, key) => {
-    if (buttonsNodes[key].classList.contains('active')) {
-      elm.style.visibility = 'visible';
-    } else {
-      elm.style.visibility = 'hidden';
+let listingIngredients = () => {
+  pricesNodes.innerHTML = '';
+  let totalPrices = 10;
+  buttonsNodes.forEach((elm, k) => {
+    if (elm.classList.contains('active')) {
+      let node = document.createElement('li');
+      console.log(node);
+      node.innerText = `$${pricesArr[k]} ${nameIngredientsArr[k]}`;
+      pricesNodes.append(node);
+      totalPrices += pricesArr[k];
     }
   });
-  
-  let totalPrices = 10;
 
-  buttonsNodes.forEach((elm, k) => {
-    if(elm.classList.contains('active')){
-      // totalPrices += ingredients[elm.innerText][price]
-      totalPrices -= - pricesNodes[k].innerText[1]
+  totalPricesNode.innerText = `$${totalPrices}`;
+};
 
-      // console.log(ingredients[elm.innerText].price);
-      ////PREGUNTAR PORQUE NO FUNCIONA*******************************************************************************
-      // console.log(ingredients[elm.innerText]);
-      console.log(pricesNodes[k].innerText[1]);
-      console.log(totalPrices);
-
-
-    }
-  })
-  // ingredients.forEach((elm, i) =>{
-  //   if (buttonsNodes[i].classList.contains('active')){
-  //   totalPrices += elm.price }  }   )
-  totalPricesNode.innerText = `$${totalPrices}`
-
-
+function renderPrice() {
+  // Iteration 4: change the HTML of `<aside class="panel price">`
+  listingIngredients();
 }
 
 renderEverything();
